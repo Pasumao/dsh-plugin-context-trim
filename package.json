@@ -1,7 +1,7 @@
 {
   "name": "dsh-plugin-context-trim",
   "description": "会话注入门控：给 DeepSeek Harness (dsh) 加一个会话级上下文裁剪闸门，按会话取消/恢复插件贡献的 skill、tool、系统提示词段落——3 条影子通道、5 条本地路由、零依赖零配置。Per-session injection gate for DeepSeek Harness (dsh): trim skills, tools and prompt sections per session. Zero-config, zero dependencies.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "main": "lib/index.js",
   "exports": {
