@@ -1,0 +1,7 @@
+# dsh-plugin-context-trim bundle patch: 挂载一行，交给 profile 的
+# dsh.profile.bundles（与 dsh-plugin-image-tools 同款机制）自动应用。
+# `name` 必须等于 package.json 的 `name`（loader 按该名从 profile 的
+# node_modules 解析插件模块）。严禁在 profile 层再 insert 同 id（双挂载即崩）。
+- insert:
+    - id: dsh-plugin-context-trim
+      name: dsh-plugin-context-trim
