@@ -83,7 +83,9 @@ changes need a dsh restart; client-side changes need a browser reload.
 **This plugin is zero-config**: install and use — no keys, no accounts, no required fields.
 Selections persist automatically to `$DSH_HOME/dsh-plugin-context-trim.json`
 (UTF-8 without BOM, atomic writes); manual editing is normally unnecessary. The HTTP routes
-listen on the local loopback only and serve only the local GUI.
+are hardened in multiple layers: loopback sources only (an empty `remoteAddress` is always
+rejected), a `Host` header check (only 127.0.0.1/localhost with a matching port), and a
+2 MB request-body cap — they serve only the local GUI.
 
 ## How it works
 
@@ -124,7 +126,9 @@ included) from the global view, overriding only `modelInvocable`.
 - Plugins that do not label `provider` have their skills grouped under "runtime skills"
 - Shadow install callbacks settle at microtask level, in practice well before the first
   model pre-step
-- HTTP routes serve only the local GUI (loopback check), never exposed publicly
+- HTTP routes serve only the local GUI: loopback source check (empty `remoteAddress`
+  rejected) + `Host` header validation (127.0.0.1/localhost with matching port only)
+  + 2 MB request-body cap; never exposed publicly
 
 ## FAQ
 

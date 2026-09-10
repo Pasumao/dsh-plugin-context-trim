@@ -72,7 +72,8 @@ npm install
 
 **本插件零配置（zero-config）**：安装即用——没有密钥、没有账号、没有任何必填字段。
 选择数据自动持久化在 `$DSH_HOME/dsh-plugin-context-trim.json`（UTF-8 无 BOM，原子写入），
-一般无需手工编辑；HTTP 路由仅监听本机回环地址，仅服务本机 GUI。
+一般无需手工编辑；HTTP 路由有多层安全加固：仅接受本机回环来源（`remoteAddress` 为空一律拒绝）、
+校验 `Host` 头（仅允许 127.0.0.1/localhost 且端口匹配）、请求体上限 2MB，仅服务本机 GUI。
 
 ## 工作原理
 
@@ -108,7 +109,8 @@ agent.ctx 服务属性受 inject 白名单保护）；agent 销毁时 cordis eff
 - 动态 cordis 插件（cordis_run）的 scoped 工具不受 restrict 约束
 - 其他插件未标注 `provider` 时，其技能归入「运行时技能」组（归属表随版本维护）
 - 影子注册体在依赖就绪后的微任务级落地，实践中先于首个模型 pre-step 完成
-- HTTP 路由仅服务本机 GUI（回环地址校验），不暴露公网
+- HTTP 路由仅服务本机 GUI：回环地址校验（空 `remoteAddress` 拒绝）+ `Host` 头校验
+  （仅 127.0.0.1/localhost 且端口匹配）+ 请求体 2MB 上限，不暴露公网
 
 ## 常见问题
 
